@@ -45,7 +45,7 @@
 					<td colspan="3" align="center">
 						<button type="submit">Submit</button>
 						&nbsp;&nbsp;
-						<button id="buttonCancel">Cancel</button>
+						<button type="button" onclick="history.go(-1)">Cancel</button>
 					</td>
 				</tr>
 			</table>
@@ -57,11 +57,6 @@
 <script type="text/javascript">
 
 	$(document).ready(function() {
-		
-		$("#buttonCancel").click(function() {
-			history.go(-1);
-		});
-
 		
 		$("#rateYo").rateYo({
 			starWidth: "40px",

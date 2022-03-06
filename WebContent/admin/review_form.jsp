@@ -16,7 +16,7 @@
 	</div>
 	
 	<div align="center">
-		<form action="update_review" method="post">
+		<form action="update_review" method="post" style="max-width: 700px; margin: 0 auto;">
 		<input type="hidden" name="reviewId" value="${review.reviewId}">
 
 		

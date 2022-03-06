@@ -20,7 +20,7 @@
 	</div>
 	
 	<div align="center">
-		<form action="update_profile" method="post" id="customerForm">
+		<form action="update_profile" method="post" style="max-width: 800px; margin: 0 auto;">
 		
 		<table class="form">
 			<tr>
@@ -91,7 +91,7 @@
 			<tr>
 				<td colspan="2" align="center">
 					<button type="submit">Save</button>&nbsp;&nbsp;&nbsp;
-					<button id="buttonCancel">Cancel</button>
+					<button type="button" onclick="history.go(-1)">Cancel</button>
 				</td>
 			</tr>				
 		</table>

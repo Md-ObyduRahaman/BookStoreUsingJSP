@@ -24,11 +24,11 @@
 	
 	<div align="center">
 		<c:if test="${user != null}">
-			<form action="update_user" method="post">
+			<form action="update_user" method="post" style="max-width: 400px; margin: 0 auto;">
 			<input type="hidden" name="userId" value="${user.userId}">
 		</c:if>
 		<c:if test="${user == null}">
-			<form action="create_user" method="post">
+			<form action="create_user" method="post" style="max-width: 400px; margin: 0 auto;">
 		</c:if>
 		
 		<table class="form">
@@ -54,7 +54,7 @@
 			<tr>
 				<td colspan="2" align="center">
 					<button type="submit">Save</button>&nbsp;&nbsp;&nbsp;
-					<button id="buttonCancel" onclick="history.go(-1);">Cancel</button>
+					<button type="button" onclick="history.go(-1);">Cancel</button>
 				</td>
 			</tr>				
 		</table>

@@ -13,7 +13,6 @@
 	<link rel="stylesheet" href="..//css/richtext.min.css">	
 	
 	<script type="text/javascript" src="../js/jquery-3.3.1.min.js"></script>
-	<script type="text/javascript" src="../js/jquery.validate.min.js"></script>
 	
 	<script type="text/javascript" src="../js/jquery.richtext.min.js"></script>
 </head>
@@ -42,9 +41,9 @@
 		
 		<table class="form">
 			<tr>
-				<td>Category:</td>
+				<td align="right">Category:</td>
 				<td>
-					<select name="category">
+					<select name="category" required>
 						<c:forEach items="${listCategory}" var="category">
 							<c:if test="${category.categoryId eq book.category.categoryId}">
 								<option value="${category.categoryId}" selected>

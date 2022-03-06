@@ -20,7 +20,7 @@
 	</div>
 	
 	<div align="center">
-		<form action="register_customer" method="post" id="customerForm">
+		<form action="register_customer" method="post" id="customerForm" style="max-width: 800px; margin: 0 auto;">
 		
 		<jsp:directive.include file="../common/customer_form.jsp" />
 		</form>
