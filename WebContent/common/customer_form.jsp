@@ -1,52 +1,56 @@
 		<table class="form">
 			<tr>
 				<td align="right">E-mail:</td>
-				<td align="left"><input type="text" id="email" name="email" size="45" value="${customer.email}" /></td>
+				<td align="left"><input type="email" name="email" size="45" value="${customer.email}" required minlength="5" maxlength="64" /></td>
 			</tr>
 			<tr>
 				<td align="right">First Name:</td>
-				<td align="left"><input type="text" id="firstname" name="firstname" size="45" value="${customer.firstname}" /></td>
+				<td align="left"><input type="text" name="firstname" size="45" value="${customer.firstname}" required minlength="2" maxlength="30" /></td>
 			</tr>
 			<tr>
 				<td align="right">Last Name:</td>
-				<td align="left"><input type="text" id="lastname" name="lastname" size="45" value="${customer.lastname}" /></td>
+				<td align="left"><input type="text" name="lastname" size="45" value="${customer.lastname}" required minlength="2" maxlength="30"/></td>
 			</tr>			
 			<tr>
 				<td align="right">Password:</td>
-				<td align="left"><input type="password" id="password" name="password" size="45" value="${customer.password}" /></td>
+				<td align="left"><input type="password" id="password" name="password" size="45" value="${customer.password}" required minlength="5" maxlength="16" /></td>
 			</tr>
 			<tr>
 				<td align="right">Confirm Password:</td>
-				<td align="left"><input type="password" id="confirmPassword" name="confirmPassword" size="45" value="${customer.password}" /></td>
+				<td align="left">
+					<input type="password" name="confirmPassword" size="45" 
+							value="${customer.password}" required minlength="5" maxlength="16"
+							oninput="checkPasswordMatch(this)" />
+				</td>
 			</tr>			
 			<tr>
 				<td align="right">Phone Number:</td>
-				<td align="left"><input type="text" id="phone" name="phone" size="45" value="${customer.phone}" /></td>
+				<td align="left"><input type="text" name="phone" size="45" value="${customer.phone}" required minlength="9" maxlength="15"/></td>
 			</tr>
 			<tr>
 				<td align="right">Address Line 1:</td>
-				<td align="left"><input type="text" id="address1" name="address1" size="45" value="${customer.addressLine1}" /></td>
+				<td align="left"><input type="text" name="address1" size="45" value="${customer.addressLine1}" required minlength="10" maxlength="128"/></td>
 			</tr>
 			<tr>
 				<td align="right">Address Line 2:</td>
-				<td align="left"><input type="text" id="address2" name="address2" size="45" value="${customer.addressLine2}" /></td>
+				<td align="left"><input type="text" name="address2" size="45" value="${customer.addressLine2}" required maxlength="128"/></td>
 			</tr>			
 			<tr>
 				<td align="right">City:</td>
-				<td align="left"><input type="text" id="city" name="city" size="45" value="${customer.city}" /></td>
+				<td align="left"><input type="text" name="city" size="45" value="${customer.city}" required minlength="2" maxlength="32" /></td>
 			</tr>
 			<tr>
 				<td align="right">State:</td>
-				<td align="left"><input type="text" id="state" name="state" size="45" value="${customer.state}" /></td>
+				<td align="left"><input type="text" name="state" size="45" value="${customer.state}" required minlength="2" maxlength="45" /></td>
 			</tr>			
 			<tr>
 				<td align="right">Zip Code:</td>
-				<td align="left"><input type="text" id="zipCode" name="zipCode" size="45" value="${customer.zipcode}" /></td>
+				<td align="left"><input type="text" name="zipCode" size="45" value="${customer.zipcode}" required minlength="3" maxlength="24" /></td>
 			</tr>
 			<tr>
 				<td align="right">Country:</td>
 				<td align="left">
-					<select name="country" id="country">
+					<select name="country" required>
 					<c:forEach items="${mapCountries}" var="country">
 						<option value="${country.value}" <c:if test='${customer.country eq country.value}'>selected='selected'</c:if> >${country.key}</option>
 					</c:forEach>

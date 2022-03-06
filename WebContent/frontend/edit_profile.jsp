@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
@@ -9,8 +9,6 @@
 	
 	<link rel="stylesheet" href="css/style.css" >
 	<script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
-	<script type="text/javascript" src="js/jquery.validate.min.js"></script>
-	
 </head>
 <body>
 	<jsp:directive.include file="header.jsp" />
@@ -31,40 +29,40 @@
 			</tr>
 			<tr>
 				<td align="right">First Name:</td>
-				<td align="left"><input type="text" id="firstname" name="firstname" size="45" value="${loggedCustomer.firstname}" /></td>
+				<td align="left"><input type="text" name="firstname" size="45" value="${loggedCustomer.firstname}" required minlength="2" maxlength="30" /></td>
 			</tr>
 			<tr>
 				<td align="right">Last Name:</td>
-				<td align="left"><input type="text" id="lastname" name="lastname" size="45" value="${loggedCustomer.lastname}" /></td>
+				<td align="left"><input type="text" name="lastname" size="45" value="${loggedCustomer.lastname}" required minlength="2" maxlength="30" /></td>
 			</tr>			
 			<tr>
 				<td align="right">Phone Number:</td>
-				<td align="left"><input type="text" id="phone" name="phone" size="45" value="${loggedCustomer.phone}" /></td>
+				<td align="left"><input type="text" name="phone" size="45" value="${loggedCustomer.phone}" required minlength="9" maxlength="15" /></td>
 			</tr>
 			<tr>
 				<td align="right">Address Line 1:</td>
-				<td align="left"><input type="text" id="address1" name="address1" size="45" value="${loggedCustomer.addressLine1}" /></td>
+				<td align="left"><input type="text" name="address1" size="45" value="${loggedCustomer.addressLine1}" required minlength="10" maxlength="128" /></td>
 			</tr>
 			<tr>
 				<td align="right">Address Line 2:</td>
-				<td align="left"><input type="text" id="address2" name="address2" size="45" value="${loggedCustomer.addressLine2}" /></td>
+				<td align="left"><input type="text" name="address2" size="45" value="${loggedCustomer.addressLine2}" required maxlength="128" /></td>
 			</tr>
 			<tr>
 				<td align="right">City:</td>
-				<td align="left"><input type="text" id="city" name="city" size="45" value="${loggedCustomer.city}" /></td>
+				<td align="left"><input type="text" name="city" size="45" value="${loggedCustomer.city}" required minlength="2" maxlength="32" /></td>
 			</tr>
 			<tr>
 				<td align="right">State:</td>
-				<td align="left"><input type="text" id="state" name="state" size="45" value="${loggedCustomer.state}" /></td>
+				<td align="left"><input type="text" name="state" size="45" value="${loggedCustomer.state}" required minlength="2" maxlength="45" /></td>
 			</tr>						
 			<tr>
 				<td align="right">Zip Code:</td>
-				<td align="left"><input type="text" id="zipCode" name="zipCode" size="45" value="${loggedCustomer.zipcode}" /></td>
+				<td align="left"><input type="text" name="zipCode" size="45" value="${loggedCustomer.zipcode}" required minlength="3" maxlength="24" /></td>
 			</tr>
 			<tr>
 				<td align="right">Country:</td>
 				<td align="left">
-					<select name="country" id="country">
+					<select name="country" required>
 					<c:forEach items="${mapCountries}" var="country">
 						<option value="${country.value}" <c:if test='${loggedCustomer.country eq country.value}'>selected='selected'</c:if> >${country.key}</option>
 					</c:forEach>
@@ -78,11 +76,16 @@
 			</tr>
 			<tr>
 				<td align="right">Password:</td>
-				<td align="left"><input type="password" id="password" name="password" size="45" /></td>
+				<td align="left">
+					<input type="password" id="password" name="password" size="45" maxlength="16" 
+						oninput="checkPasswordMatch(document.getElementById('confirmPassword'))"/>
+				</td>
 			</tr>
 			<tr>
 				<td align="right">Confirm Password:</td>
-				<td align="left"><input type="password" id="confirmPassword" name="confirmPassword" size="45" /></td>
+				<td align="left">
+					<input type="password" name="confirmPassword" id="confirmPassword" size="45" maxlength="16" oninput="checkPasswordMatch(this)" />
+				</td>
 			</tr>																			
 			<tr><td>&nbsp;</td></tr>
 			<tr>
@@ -96,52 +99,6 @@
 	</div>
 
 	<jsp:directive.include file="footer.jsp" />
+<script type="text/javascript" src="js/customer-form.js"></script>	
 </body>
-<script type="text/javascript">
-
-	$(document).ready(function() {
-		$("#customerForm").validate({
-			rules: {
-				email: {
-					required: true,
-					email: true
-				},
-				fullName: "required",
-				
-				confirmPassword: {
-					equalTo: "#password"
-				},
-				
-				phone: "required",								
-				address: "required",
-				city: "required",
-				zipCode: "required",
-				country: "required",
-			},
-			
-			messages: {
-				email: {
-					required: "Please enter e-mail address",
-					email: "Please enter a valid e-mail address"
-				},
-				
-				fullName: "Please enter full name",
-				
-				confirmPassword: {
-					equalTo: "Confirm password does not match password"
-				},
-				
-				phone: "Please enter phone number",								
-				address: "Please enter address",
-				city: "Please enter city",
-				zipCode: "Please enter zip code",
-				country: "Please enter country",
-			}
-		});
-		
-		$("#buttonCancel").click(function() {
-			history.go(-1);
-		});
-	});	
-</script>
 </html>

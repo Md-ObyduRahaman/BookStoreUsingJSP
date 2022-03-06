@@ -8,7 +8,6 @@
 	<title>Write a Review - Online Book Store</title>
 	<link rel="stylesheet" href="css/style.css" >
 	<script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
-	<script type="text/javascript" src="js/jquery.validate.min.js"></script>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.3.2/jquery.rateyo.min.css">
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.3.2/jquery.rateyo.min.js"></script>
 </head>
@@ -16,7 +15,7 @@
 	<jsp:directive.include file="header.jsp" />
 	
 	<div align="center">
-		<form id="reviewForm" action="submit_review" method="post">
+		<form action="submit_review" method="post">
 			<table class="normal" width="60%">
 				<tr>
 					<td><h2>Your Reviews</h2></td>
@@ -36,10 +35,10 @@
 						<input type="hidden" id="rating" name="rating" />
 						<input type="hidden" name="bookId" value="${book.bookId}" />
 						<br/>
-						<input type="text" name="headline" size="60" placeholder="Headline or summary for your review (required)" />
+						<input type="text" name="headline" size="60" placeholder="Headline or summary for your review (required)" required minlength="10" maxlength="128" />
 						<br/>
 						<br/>
-						<textarea name="comment" cols="70" rows="10" placeholder="Write your review details..." ></textarea>
+						<textarea name="comment" cols="70" rows="10" placeholder="Write your review details..." required minlength="10" maxlength="500" ></textarea>
 					</td>
 				</tr>
 				<tr>
@@ -61,18 +60,6 @@
 		
 		$("#buttonCancel").click(function() {
 			history.go(-1);
-		});
-		
-		$("#reviewForm").validate({
-			rules: {
-				headline: "required",
-				comment: "required"
-			},
-			
-			messages: {
-				headline: "Please enter headline",				
-				comment: "Please enter review details"
-			}
 		});
 
 		

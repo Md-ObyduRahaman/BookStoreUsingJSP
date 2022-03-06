@@ -10,7 +10,6 @@
 	
 	<link rel="stylesheet" href="../css/style.css" >
 	<script type="text/javascript" src="../js/jquery-3.3.1.min.js"></script>
-	<script type="text/javascript" src="../js/jquery.validate.min.js"></script>
 	
 </head>
 <body>
@@ -29,11 +28,11 @@
 	
 	<div align="center">
 		<c:if test="${customer != null}">
-			<form action="update_customer" method="post" id="customerForm">
+			<form action="update_customer" method="post">
 			<input type="hidden" name="customerId" value="${customer.customerId}">
 		</c:if>
 		<c:if test="${customer == null}">
-			<form action="create_customer" method="post" id="customerForm">
+			<form action="create_customer" method="post">
 		</c:if>
 		
 		<jsp:directive.include file="../common/customer_form.jsp" />

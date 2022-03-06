@@ -2,21 +2,19 @@
     pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 	<title>Create New Book</title>
 	
 	<link rel="stylesheet" href="../css/style.css" >
-	<link rel="stylesheet" href="../css/jquery-ui.min.css">
 	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 	<link rel="stylesheet" href="..//css/richtext.min.css">	
 	
 	<script type="text/javascript" src="../js/jquery-3.3.1.min.js"></script>
 	<script type="text/javascript" src="../js/jquery.validate.min.js"></script>
 	
-	<script type="text/javascript" src="../js/jquery-ui.min.js"></script>
 	<script type="text/javascript" src="../js/jquery.richtext.min.js"></script>
 </head>
 <body>
@@ -35,11 +33,11 @@
 	
 	<div align="center">
 		<c:if test="${book != null}">
-			<form action="update_book" method="post" id="bookForm" enctype="multipart/form-data">
+			<form action="update_book" method="post" enctype="multipart/form-data">
 			<input type="hidden" name="bookId" value="${book.bookId}">
 		</c:if>
 		<c:if test="${book == null}">
-			<form action="create_book" method="post" id="bookForm" enctype="multipart/form-data">
+			<form action="create_book" method="post" enctype="multipart/form-data">
 		</c:if>
 		
 		<table class="form">
@@ -62,25 +60,34 @@
 			</tr>
 			<tr>
 				<td align="right">Title:</td>
-				<td align="left"><input type="text" id="title" name="title" size="20" value="${book.title}" /></td>
+				<td align="left"><input type="text" name="title" size="20" value="${book.title}" required /></td>
 			</tr>
 			<tr>
 				<td align="right">Author:</td>
-				<td align="left"><input type="text" id="author" name="author" size="20" value="${book.author}" /></td>
+				<td align="left"><input type="text" name="author" size="20" value="${book.author}" required /></td>
 			</tr>
 			<tr>
 				<td align="right">ISBN:</td>
-				<td align="left"><input type="text" id="isbn" name="isbn" size="20" value="${book.isbn}" /></td>
+				<td align="left"><input type="text" name="isbn" size="20" value="${book.isbn}" required /></td>
 			</tr>
 			<tr>
 				<td align="right">Publish Date:</td>
-				<td align="left"><input type="text" id="publishDate" name="publishDate" size="20" 
-					value="<fmt:formatDate pattern='MM/dd/yyyy' value='${book.publishDate}' />" /></td>
+				<td align="left">
+					<input type="date" name="publishDate" size="20" required
+						value="<fmt:formatDate pattern='yyyy-MM-dd' value='${book.publishDate}' />" />
+					</td>
 			</tr>			
 			<tr>
 				<td align="right">Book Image:</td>
 				<td align="left">
+					<c:if test="${book == null}">
+					<input type="file" id="bookImage" name="bookImage" size="20" required /><br/>
+					</c:if>
+					
+					<c:if test="${book != null}">
 					<input type="file" id="bookImage" name="bookImage" size="20" /><br/>
+					</c:if>					
+					
 					<img id="thumbnail" alt="Image Preview" style="width:20%; margin-top: 10px"
 						src="data:image/jpg;base64,${book.base64Image}"
 					 />
@@ -88,12 +95,12 @@
 			</tr>
 			<tr>
 				<td align="right">Price:</td>
-				<td align="left"><input type="text" id="price" name="price" size="20" value="${book.price}" /></td>
+				<td align="left"><input type="text" name="price" size="20" value="${book.price}" required /></td>
 			</tr>
 			<tr>
 				<td align="right">Description:</td>
 				<td align="left">
-					<textarea rows="5" cols="50" name="description" id="description">${book.description}</textarea>
+					<textarea rows="5" cols="50" name="description" id="description" required>${book.description}</textarea>
 				</td>
 			</tr>										
 			<tr><td>&nbsp;</td></tr>
@@ -112,40 +119,10 @@
 <script type="text/javascript">
 
 	$(document).ready(function() {
-		$('#publishDate').datepicker();
 		$('#description').richText();
 		
 		$('#bookImage').change(function() {
 			showImageThumbnail(this);
-		});
-		
-		
-		$("#bookForm").validate({
-			rules: {
-				category: "required",
-				title: "required",
-				author: "required",
-				isbn: "required",
-				publishDate: "required",
-				
-				<c:if test="${book == null}">
-				bookImage: "required",
-				</c:if>
-				
-				price: "required",
-				description: "required",
-			},
-			
-			messages: {
-				category: "Please select a category for the book",
-				title: "Please enter title of the book",
-				author: "Please enter author of the book",
-				isbn: "Please enter ISBN of the book",
-				publishDate: "Please enter publish date of the book",
-				bookImage: "Please choose an image of the book",
-				price: "Please enter price of the book",
-				description: "Please enter description of the book"
-			}
 		});
 		
 		$("#buttonCancel").click(function() {

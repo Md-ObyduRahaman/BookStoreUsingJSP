@@ -6,9 +6,7 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 	<link rel="stylesheet" href="../css/style.css" >
-	<script type="text/javascript" src="../js/jquery-3.3.1.min.js"></script>
-	<script type="text/javascript" src="../js/jquery.validate.min.js"></script>	
-<title>Edit Review</title>
+	<title>Edit Review</title>
 </head>
 <body>
 	<jsp:directive.include file="header.jsp" />
@@ -18,7 +16,7 @@
 	</div>
 	
 	<div align="center">
-		<form action="update_review" method="post" id="reviewForm">
+		<form action="update_review" method="post">
 		<input type="hidden" name="reviewId" value="${review.reviewId}">
 
 		
@@ -38,20 +36,20 @@
 			<tr>
 				<td align="right">Headline:</td>
 				<td align="left">
-					<input type="text" size="60" name="headline" value="${review.headline}" />
+					<input type="text" size="60" name="headline" value="${review.headline}" required minlength="10" maxlength="128" />
 				</td>
 			</tr>
 			<tr>
 				<td align="right">Comment:</td>
 				<td align="left">
-					<textarea rows="5" cols="70" name="comment">${review.comment}</textarea>
+					<textarea rows="5" cols="70" name="comment" required>${review.comment}</textarea>
 				</td>
 			</tr>			
 			<tr><td>&nbsp;</td></tr>
 			<tr>
 				<td colspan="2" align="center">
 					<button type="submit">Save</button>&nbsp;&nbsp;&nbsp;
-					<input type="button" id="buttonCancel" value="Cancel" />
+					<input type="button" id="buttonCancel" value="Cancel" onclick="history.go(-1);" />
 				</td>
 			</tr>				
 		</table>
@@ -60,23 +58,4 @@
 
 	<jsp:directive.include file="footer.jsp" />
 </body>
-<script type="text/javascript">
-$(document).ready(function() {
-	$("#reviewForm").validate({
-		rules: {	
-			headline: "required",
-			comment: "required"
-		},
-		
-		messages: {
-			headline: "Please enter headline",
-			comment: "Please enter comment",
-		}
-	});
-	
-	$("#buttonCancel").click(function() {
-		history.go(-1);
-	});	
-});
-</script>
 </html>
