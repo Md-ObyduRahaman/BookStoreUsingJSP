@@ -2,14 +2,12 @@
     pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 	<title>Edit Order - Evergreen Bookstore Administration</title>
 	<link rel="stylesheet" href="../css/style.css" >
-	<script type="text/javascript" src="../js/jquery-3.3.1.min.js"></script>
-	<script type="text/javascript" src="../js/jquery.validate.min.js"></script>	
 </head>
 <body>
 	<jsp:directive.include file="header.jsp" />
@@ -24,7 +22,7 @@
 	</div>
 	</c:if>
 	
-	<form action="update_order" method="post" id="orderForm">
+	<form action="update_order" method="post">
 	<div align="center">
 	
 		<table>
@@ -64,40 +62,40 @@
 		<table>	
 			<tr>
 				<td><b>First Name: </b></td>
-				<td><input type="text" name="firstname" id="firstname" value="${order.firstname}" size="45" /></td>
+				<td><input type="text" name="firstname" value="${order.firstname}" size="45" required minlength="3" maxlength="30" /></td>
 			</tr>
 			<tr>
 				<td><b>Last Name: </b></td>
-				<td><input type="text" name="lastname" id="lastname" value="${order.lastname}" size="45" /></td>
+				<td><input type="text" name="lastname" value="${order.lastname}" size="45" required minlength="3" maxlength="30" /></td>
 			</tr>			
 			<tr>
 				<td><b>Phone: </b></td>
-				<td><input type="text" name="phone" id="phone" value="${order.phone}" size="45" /></td>
+				<td><input type="text" name="phone" value="${order.phone}" size="45" required minlength="9" maxlength="15" /></td>
 			</tr>		
 			<tr>
 				<td><b>Address Line 1: </b></td>
-				<td><input type="text" name="address1" id="address1" value="${order.addressLine1}" size="45" /></td>
+				<td><input type="text" name="address1" value="${order.addressLine1}" size="45" required minlength="10" maxlength="256" /></td>
 			</tr>
 			<tr>
 				<td><b>Address Line 2: </b></td>
-				<td><input type="text" name="address2" id="address2" value="${order.addressLine2}" size="45" /></td>
+				<td><input type="text" name="address2" value="${order.addressLine2}" size="45" required minlength="10" maxlength="256" /></td>
 			</tr>
 			<tr>
 				<td><b>City: </b></td>
-				<td><input type="text" name="city" id="city" value="${order.city}" size="45" /></td>
+				<td><input type="text" name="city" value="${order.city}" size="45" required minlength="3" maxlength="32" /></td>
 			</tr>			
 			<tr>
 				<td><b>State: </b></td>
-				<td><input type="text" name="state" id="state" value="${order.state}" size="45" /></td>
+				<td><input type="text" name="state" value="${order.state}" size="45" required minlength="3" maxlength="45" /></td>
 			</tr>
 			<tr>
 				<td><b>Zipcode: </b></td>
-				<td><input type="text" name="zipcode" id="zipcode" value="${order.zipcode}" size="45" /></td>
+				<td><input type="text" name="zipcode" value="${order.zipcode}" size="45" required minlength="3" maxlength="24" /></td>
 			</tr>
 			<tr>
 				<td><b>Country: </b></td>
 				<td>
-					<select name="country" id="country">
+					<select name="country" required>
 					<c:forEach items="${mapCountries}" var="country">
 						<option value="${country.value}" <c:if test='${order.country eq country.value}'>selected='selected'</c:if> >${country.key}</option>
 					</c:forEach>
@@ -129,7 +127,7 @@
 				</td>
 				<td>
 					<input type="hidden" name="bookId" value="${orderDetail.book.bookId}" />
-					<input type="text" name="quantity${status.index + 1}" value="${orderDetail.quantity}" size="5" />
+					<input type="number" name="quantity${status.index + 1}" value="${orderDetail.quantity}" size="5" step="1" min="1" required />
 				</td>
 				
 				<td><fmt:formatNumber value="${orderDetail.subtotal}" type="currency" /></td>
@@ -139,8 +137,8 @@
 			<tr>
 				<td colspan="7" align="right">
 					<p>Subtotal: <fmt:formatNumber value="${order.subtotal}" type="currency" /></p>
-					<p>Tax: <input type="text" size="5" name="tax" id="tax" value="${order.tax}" /></p>
-					<p>Shipping Fee: <input type="text" size="5" name="shippingFee" id="shippingFee" value="${order.shippingFee}" /></p>
+					<p>Tax: <input type="number" size="5" name="tax" value="${order.tax}" required step="0.1" min="0.0" /></p>
+					<p>Shipping Fee: <input type="number" size="5" name="shippingFee" value="${order.shippingFee}" required  step="0.1" min="0.0"/></p>
 					<p>TOTAL: <fmt:formatNumber value="${order.total}" type="currency" /></p>
 				</td>				
 			</tr>
@@ -168,63 +166,6 @@
 			window.open('add_book_form', '_blank', 
 					'width=' + width + ', height=' + height + ', top=' + top + ', left=' + left);
 		}
-		
-		$(document).ready(function() {
-			$("#orderForm").validate({
-				rules: {	
-					firstname: "required",
-					lastname: "required",
-					phone: "required",
-					address1: "required",
-					address2: "required",
-					city: "required",
-					state: "required",
-					zipcode: "required",
-					country: "required",
-					
-					<c:forEach items="${order.orderDetails}" var="book" varStatus="status">
-						quantity${status.index + 1}: {
-							required: true, number: true, min: 1
-						},
-					</c:forEach>
-						
-					shippingFee: {required: true, number: true, min: 0},
-					tax: {required: true, number: true, min: 0}
-				},
-				
-				messages: {
-					firstname: "Please enter first name",
-					lastname: "Please enter last name",
-					phone: "Please enter phone number",
-					address1: "Please enter address line 1",
-					address2: "Please enter address line 2",
-					city: "Please enter city",
-					state: "Please enter state",
-					zipcode: "Please enter zipcode",
-					country: "Please select country",
-					
-					<c:forEach items="${order.orderDetails}" var="book" varStatus="status">
-						quantity${status.index + 1}: { 
-							required: "Please enter quantity",
-							number: "Quantity must be a number",
-							min: "Quantity must be greater than 0"
-						},
-					</c:forEach>
-						
-					shippingFee: {
-						required: "Please enter shipping fee",
-						number: "Shipping fee must be a number",
-						min: "Shipping fee must be equal or greater than 0"
-					},
-					tax: {
-						required: "Please enter tax",
-						number: "Tax must be a number",
-						min: "Tax must be equal or greater than 0"
-					}					
-				}
-			});
-			
-		});		
 	</script>
 </body>
 </html>
