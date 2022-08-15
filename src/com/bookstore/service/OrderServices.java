@@ -198,9 +198,10 @@ public class OrderServices {
 	private void placeOrderCOD(BookOrder order) throws ServletException, IOException {
 		saveOrder(order);
 		
-		String message = "Thank you. Your order has been received."
+		String message = "Thank you. Your order has been received. "
 				+ "We will deliver your books within a few days.";
 		request.setAttribute("message", message);
+		request.setAttribute("pageTitle", "Order Completed");
 		
 		String messagePage = "frontend/message.jsp";
 		RequestDispatcher dispatcher = request.getRequestDispatcher(messagePage);
